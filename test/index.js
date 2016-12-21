@@ -32,11 +32,21 @@ each(list, function(item, cb) {
 var unchanged = 'unchanged';
 var nothing;
 each(nothing, function(item, cb) {
-	unchanged = changed;
+	unchanged = 'changed';
 	cb();
 }, function(err) {
 	tap.assert.equal(unchanged, 'unchanged', "If the array does not exist, go straight to final callback.");
 });
+
+unchanged = 'unchanged';
+var empty = [];
+each(empty, function(item, cb) {
+	unchanged = 'changed';
+	cb();
+}, function(err) {
+	tap.assert.equal(unchanged, 'unchanged', "If the array is empty, go straight to final callback.");
+});
+
 
 var k;
 var list2 = [];
