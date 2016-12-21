@@ -11,7 +11,6 @@ each(list, function(item, cb) {
 	output.push(item + i);
 	cb();
 }, function(err, two, three) {
-	console.log('finished');
 	tap.assert.equal(output.length, 3, 'Should push each list item.');
 	tap.assert.equal(output[0], 'one1', 'Should run the function.');
 	tap.assert.equal(output[1], 'two2', 'Should run the function.');
@@ -22,14 +21,21 @@ var j = 0;
 each(list, function(item, cb) {
 	j++;
 	if(j == 2) {
-		console.log('throw error');
 		cb(new Error('End early'));
 	} else {
 		cb();
 	}
 }, function(err) {
-	console.log('finished');
 	tap.assert.equal(err.message, 'End early', 'An error should short circuit.');
+});
+
+var unchanged = 'unchanged';
+var nothing;
+each(nothing, function(item, cb) {
+	unchanged = changed;
+	cb();
+}, function(err) {
+	tap.assert.equal(unchanged, 'unchanged', "If the array does not exist, go straight to final callback.");
 });
 
 var k;
