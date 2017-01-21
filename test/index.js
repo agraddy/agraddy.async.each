@@ -63,6 +63,24 @@ each(list2, function(item, cb) {
 });
 order = 'after';
 
+passIndexToo();
 
+function passIndexToo() {
+	var list = ['one', 'two', 'three'];
+	var output = [];
 
+	each(list, function(item, index, cb) {
+		output.push(index);
+		cb();
+	}, function(err, two, three) {
+		tap.assert.equal(output.length, 3, 'Should push each index.');
+		tap.assert.equal(output[0], 0, 'Should pass the index.');
+		tap.assert.equal(output[1], 1, 'Should pass the index.');
+		tap.assert.equal(output[2], 2, 'Should pass the index.');
+	});
+
+}
+
+function end() {
+}
 
